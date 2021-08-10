@@ -1,0 +1,231 @@
+<style>
+
+        label {
+                font-weight: bold;
+        }
+
+        .grid-container {
+                display: grid;
+                grid-template-columns: auto auto auto;
+                border: 1px solid #dddddd;
+        }
+
+        .grid-container > div {
+                background-color: rgba(255, 255, 255, 0.8);
+                text-align: center;
+                padding: 20px 0;
+                border: 1px solid #dddddd;
+        }
+
+        .container {
+                display: table;
+                width: 100%;
+        }
+        .container div {
+                display: table-cell;
+        }
+
+        .analusi-kammmenis-ektasis{
+                grid-row-start: 2;
+                grid-row-end: 2;
+                grid-column-start: 1;
+                grid-column-end: 4;
+        }
+
+        .xartis{
+                grid-row-start: 3;
+                grid-row-end: 4;
+                grid-column-start: 2;
+                grid-column-end: 4;
+        }
+
+        #submitButton{
+                padding-left: 47%;
+                padding-top: 1%;
+        }
+
+        #fire_event_periferiaki_enotita, #fire_event_dimos, #fire_event_dasarxeio, #fire_event_pirosvestiki_ipiresia{
+                text-align: center;
+                padding-right: 2%;
+                width: 98%;
+        }
+
+        #fire_event_aitia_pirkagias{
+                text-align: center;
+        }
+
+        .label_class{
+                padding-top: 5%;
+        }
+
+        #selection{
+                padding-left: 3%;
+        }
+
+</style>
+
+<%= form_for @fire_event , :method => :POST do |form| %>
+        <div class="grid-container">
+                <div class="topothesia">
+                        <h3>Τοποθεσία</h3>
+                        <div class = "container">
+                                <div>
+                                        <br><label>Περιφερειακή Eνότητα</label><br>
+                                        <%= form.select :periferiaki_enotita, ([['Ιωαννίνων','Ιωαννίνων'],['Άρτας','Άρτας'],['Θεσπρωτίας','Θεσπρωτίας'],['Πρέβεζας','Πρέβεζας']]).sort, {} %>                                
+                                        <br><label class = "label_class">Δήμος</label><br>
+                                        <%= form.select :dimos, ([['Ιωαννιτών','Ιωαννιτών']]).sort %>
+                                
+                                        <br><label class = "label_class">Δασαρχείο</label><br>
+                                        <%= form.select :dasarxeio, [['Ιωαννίνων','Ιωαννίνων']] %>
+                                </div>
+                        
+
+                                <div id = "selection">
+                                        <br><label >Τοπική Κοινότητα</label><br>
+                                        <%= form.text_field :topiki_koinotita, :id => "top_id" %><br><br>
+                                
+                                        <br><label>Πυροσβεστική Υπηρεσία</label><br>
+                                        <%= form.select :pirosvestiki_ipiresia, [['1ος Π.Σ. ΙΩΑΝΝΙΝΩΝ','1ος Π.Σ. ΙΩΑΝΝΙΝΩΝ'],['2ος Π.Σ. ΙΩΑΝΝΙΝΩΝ','2ος Π.Σ. ΙΩΑΝΝΙΝΩΝ'],['3ος Π.Σ. ΒΙ.ΠΕ. ΙΩΑΝΝΙΝΩΝ','3ος Π.Σ. ΒΙ.ΠΕ. ΙΩΑΝΝΙΝΩΝ'],['Π.Υ. ΚΟΝΙΤΣΑΣ','Π.Υ. ΚΟΝΙΤΣΑΣ'],['Π.Κ. ΜΕΤΣΟΒΟΥ','Π.Κ. ΜΕΤΣΟΒΟΥ'],['Π.Κ. ΒΟΥΤΣΑΡΟΥ','Π.Κ. ΒΟΥΤΣΑΡΟΥ'],['Π.Κ. ΜΗΛΙΩΤΑΔΩΝ','Π.Κ. ΜΗΛΙΩΤΑΔΩΝ'],['Π.Κ. ΔΕΛΒΙΝΑΚΙΟΥ','Π.Κ. ΔΕΛΒΙΝΑΚΙΟΥ'],['Π.Υ. ΑΡΤΑΣ','Π.Υ. ΑΡΤΑΣ'],['Π.Κ. ΑΣΤΡΟΧΩΡΙΟΥ','Π.Κ. ΑΣΤΡΟΧΩΡΙΟΥ'],['Π.Κ. ΦΙΛΙΑΤΩΝ','Π.Κ. ΦΙΛΙΑΤΩΝ'],['Π.Υ. ΗΓΟΥΜΕΝΙΤΣΑΣ','Π.Υ. ΗΓΟΥΜΕΝΙΤΣΑΣ'],['Π.Υ. ΠΑΡΓΑΣ','Π.Υ. ΠΑΡΓΑΣ'],['Π.Υ. ΠΡΕΒΕΖΑΣ','Π.Υ. ΠΡΕΒΕΖΑΣ'],['Π.Κ. ΑΝΩ ΑΘΑΜΑΝΙΟΥ','Π.Κ. ΑΝΩ ΑΘΑΜΑΝΙΟΥ'],['Π.Υ. ΦΙΛΛΙΠΙΑΔΑΣ','Π.Υ. ΦΙΛΛΙΠΙΑΔΑΣ'],['Π.Κ. ΘΕΣΠΡΩΤΙΚΟΥ','Π.Κ. ΘΕΣΠΡΩΤΙΚΟΥ'],['Π.Κ. ΠΑΡΑΜΥΘΙΑΣ','Π.Κ. ΠΑΡΑΜΥΘΙΑΣ']] %>
+                                </div>
+                        </div>
+                        
+                </div>
+                <div class="suntetagmenes">
+
+                        <h3>Συντεταγμένες</h3>
+
+                        <div>
+                                <label>Γεωγραφικό Πλάτος</label><br>
+                                <%=form.number_field :location, :id => 'lat_id', :required => true, multiple: true,  :limit => 13, :step => 0.0000000000001 %>
+                        </div>
+                        <div>
+                                <br><br><label>Γεωγραφικό Μήκος</label><br>
+                                <%=form.number_field :location, :id => 'lng_id', :required => true, multiple: true,  :limit => 12, :step => 0.000000000001 %>
+                        </div>
+                </div>
+                
+                <div class="imerominia-wra">
+
+                        <h3>Ημερομηνία και Ώρα Έναρξης - Λήξης</h3>
+                        <div class = "container">
+                                <div>
+                                        <label>Ημερομηνία Έναρξης</label><br>
+                                        <%= form.date_field :sdate, :value => :sdate, :id => "datepicker" , :required => true %>
+                                        
+                                </div>
+                                <div>
+                                        <label>Ώρα Έναρξης</label><br>
+                                        <%= form.time_field :stime, value: :stime , :required => true%>
+                                </div>
+                        </div>   
+                        <br>
+                        <div class = "container">
+                                <div>
+                                        <label>Ημερομηνία Λήξης</label><br>
+                                        <%= form.date_field :edate, :value => :edate, :id => "datepicker", :required => true %>
+                                </div>
+                                
+                                <div>
+                                        <label>Ώρα Λήξης</label><br>
+                                        <%= form.time_field :etime, value: :etime , :required => true%>
+                                </div>
+                        </div>
+                </div>
+                <div class="analusi-kammmenis-ektasis">
+                        
+                        <h3>Ανάλυση Καμμένης Έκτασης</h3>
+
+                        <div class = "container">
+                                <div>
+                                        <label>Δάση</label><br>
+                                        <%= form.number_field :dasi, :min => 0, :value => 0, :class => 'text_field' %>
+                                
+                                        <br><br><label>Δασική Έκταση</label><br>
+                                        <%= form.number_field :dasiki_ektasi, :min => 0,:value => 0 , :class => 'text_field' %>
+                                </div>
+                                <div>
+                                        <label>Άλσος</label><br>
+                                        <%= form.number_field :alsi, :min => 0, :value => 0, :class => 'text_field' %>
+                                        <br><br><label>Χωροταξική Έκταση</label><br>
+                                        <%= form.number_field :xortkes_ektaseis, :min => 0, :value => 0, :class => 'text_field' %>
+                                        
+                                </div>
+                                
+                                <div>
+                                        <label class = "label_class">Καλάμια/Βάλτοι</label><br>
+                                        <%= form.number_field :kalamia_valtoi, :min => 0, :value => 0, :class => 'text_field' %>
+                                        <br><br><label>Γεωργικές Εκτάσεις</label><br>
+                                        <%= form.number_field :georgikes_ektaseis, :min => 0, :value => 0, :class => 'text_field' %>
+                                        
+                                </div>
+                                
+                                <div>
+                                        <label>Υπολλείματα Καλλιεργειών</label><br>
+                                        <%= form.number_field  :upoleimmata_kalliergiwn , :min => 0, :value => 0, :class => 'text_field'%>
+                                        
+                                        <br><br><label>Σκουπιδότοποι</label><br>
+                                        <%= form.number_field :skoupidotopoi, :min => 0, :value => 0, :class => 'text_field' %></td>
+                                        
+                                </div>
+                                
+                                <div>
+                                        <label>Συνολική Καμμένη Έκταση</label><br>
+                                        <%= form.number_field :tsize, :value => 0, :class => 'text_field', :id => 'total_id', :required => true %>
+                                
+                                </div>
+
+                        </div>
+                        
+                </div>
+                <div class="emplekomenes-dunameis">
+
+                        <h3>Εμπλεκόμενες Δυνάμεις</h3>
+                        <div>
+                                <label class = "label_class">Αριθμός Πυροσβεστικών Οχημάτων</label><br>
+                                <%= form.number_field  :arithmos_pirosvestikwn_oximatwn , :min => 0, :value => 0, :class => 'text_field'%>
+                                
+                        </div>
+
+                        <div>
+                                <label class = "label_class">Αριθμός Πυροσβεστών</label><br>
+                                <%= form.number_field :arithmos_pirosvestwn , :min => 0, :value => 0, :class => 'text_field' %>
+                                
+                        </div>
+                        
+                        <div>
+                                <label class = "label_class">Αριθμός Υπαλλήλων Πεζοπόρων Τμημάτων</label><br>
+                                <%= form.number_field :arithmos_ipallilwn_pezoporwn_tmimatwn , :min => 0, :value => 0, :class => 'text_field' %>
+                                
+                        </div>
+                        
+                        <div>
+                                <label class = "label_class">Αριθμός Αεροπλάνων</label><br>
+                                <%= form.number_field :arithmos_aeroplanwn , :min => 0, :value => 0, :class => 'text_field' %>
+                                
+                        </div>
+
+                        <div>
+                                <label class = "label_class">Αριθμός Ελικοπτέρων</label><br>
+                                <%= form.number_field :arithmos_elikopterwn , :min => 0, :value => 0, :class => 'text_field' %>
+                                                        
+                        </div>
+
+                        <div>
+                                <label class = "label_class">Αιτία Πυρκαγιάς</label><br>
+                                <%= form.select :aitia_pirkagias, ([['Άγνωστη','Άγνωστη'],['Τυχαία','Τυχαία'],['Φυσικά Αίτια','Φυσικά Αίτια'],['Εμπρησμός από Αμέλεια','Εμπρησμός από Αμέλεια'],['Εμπρησμός από Πρόθεση','Εμπρησμός από Πρόθεση']]).sort %>
+                                                        
+                        </div>
+
+                </div>
+                <div class = "xartis" id="move">
+                        <div id="miniMap" style="width: 100%; height: 100%; position: relative;">
+                        </div>
+                </div>
+                <%= form.hidden_field :perimetros_kamenis_ektasis, :id => 'input_id'%>
+                <%= form.hidden_field :duration, :id => 'duration_id'%>
+        </div>
+        <div id = "submitButton">
+                <%= form.submit "Καταγραφή περιστατικού"  %>
+        </div>
+<% end %>
+
