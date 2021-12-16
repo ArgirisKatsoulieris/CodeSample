@@ -1,8 +1,4 @@
 class FireEventsController < ApplicationController
-  #before_action :cleanup_pagination_params
-  #load_and_authorize_resource
-  #before_action :authenticate_user!
-  #before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   $call_from_show = false
   $latest_events = nil
@@ -29,7 +25,6 @@ class FireEventsController < ApplicationController
         end
       end
       if params[:date].present?
-        #puts params[:date].to_s.scan(/\d+/).map(&:to_i)
         dateForSearch = params[:date].to_s.scan(/\d+/).map(&:to_i).to_s
         if dateForSearch != "[]"
           dateForSearch[0] = ''
@@ -37,7 +32,6 @@ class FireEventsController < ApplicationController
           dateForSearchStart = dateForSearch + "-01-01"
           dateForSearchEnd = dateForSearch + "-31-01"
           @events = FireEvent.where('sdate' => {'$gte' => dateForSearchStart},'edate' => {'$lte' => dateForSearchEnd})
-          #puts dateForSearchEnd
         end
       end
       if params[:acresFrom].present? && params[:acresTo].present?
@@ -74,7 +68,6 @@ class FireEventsController < ApplicationController
 
   def create
     @fire_event = FireEvent.new(fire_events_params)
-    #print(fire_events_params)
     @fire_event.location = [ params["fire_event"]["location"][0].to_f, params["fire_event"]["location"][1].to_f ]
     if @fire_event.save
      redirect_to root_path, notice: "The fire event has been created !" and return
@@ -84,19 +77,12 @@ class FireEventsController < ApplicationController
 
   def edit
     @events=FireEvent.all
-    print("********edit-BEFORE********")
     @fire_event = FireEvent.find(params[:id])
-    #print(fire_events_params)
-    #print(@fire_event.location)
-    print("********edit-AFTER********")
-    #@fire_event.save
     
   end
 
   def update
-    print("+++++++++++ UPDATE START +++++++++++")
     @fire_event = FireEvent.find(params[:id])
-    #raise params.inspect
     if @fire_event.update_attributes( fire_events_params )
       if @fire_event.update_attribute( :location, params["fire_event"]["location"] )
         print("++++++++ UPDATE END ++++++++++")
@@ -113,11 +99,7 @@ class FireEventsController < ApplicationController
   end
 
   def fire_events_params
-    #@fire_event = FireEvent.find(params[:_id])
-    #print("$$$$$$$$$ FIRE EVENT PRINT START $$$$$$$$$$ \n")
-    #puts @fire_event.to_yaml
     params.require(:fire_event).permit(:_id, :alsi, :dasarxeio, :dasi, :dasiki_ektasi, :edate, :georgikes_ektaseis, :kalamia_valtoi, :location, :latitude, :longitude, :sdate, :skoupidotopoi, :stime, :etime, :topiki_koinotita, :tsize, :upoleimmata_kalliergiwn, :xortkes_ektaseis, :duration, :dimos, :periferiaki_enotita, :arithmos_pirosvestikwn_oximatwn, :arithmos_pirosvestwn, :arithmos_ipallilwn_pezoporwn_tmimatwn, :arithmos_aeroplanwn, :arithmos_elikopterwn, :perimetros_kamenis_ektasis, :pirosvestiki_ipiresia, :aitia_pirkagias )
-    #print("$$$$$$$$$ FIRE EVENT PRINT END $$$$$$$$$$ \n")
   end
 
   private
